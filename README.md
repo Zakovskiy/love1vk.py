@@ -1,7 +1,7 @@
 <h1 align="center">
   Love VK API on Python
 </h1>
-Библиотека для ВК Игры [Love](https://vk.com/love1v)
+<center>Библиотека для ВК Игры <a href="https://vk.com/love1v">Любовь</a></center>
 
 # Install
 ```
