@@ -45,47 +45,49 @@ class BootData:
 
 	@property
 	def BootData(self):
-		self.is_viral_tab_disabled = self.json["isViralTabDisabled"]
-		self.bonus_per_game_win = self.json["bonusPerGameWin"]
-		self.hp = self.json["hp"]
-		self.vp200 = self.json["vp200"]
-		self.viral_questions = self.json["viralQuestions"]
-		self.total_photo_views = self.json["totalPhotoViews"]
-		self.slE = self.json["slE"]
-		self.b1 = self.json["b1"]
+		self.is_viral_tab_disabled = self.json.get("isViralTabDisabled")
+		self.is_viral_tab_disabled = None
+		self.bonus_per_game_win = self.json.get("bonusPerGameWin")
+		self.bonus_per_game_win = None
+		self.hp = self.json.get("hp")
+		self.vp200 = self.json.get("vp200")
+		self.viral_questions = self.json.get("viralQuestions")
+		self.total_photo_views = self.json.get("totalPhotoViews")
+		self.slE = self.json.get("slE")
+		self.b1 = self.json.get("b1")
 		self.photos_is_available_for_room = self.json['photosIsAvailableForRoom']
-		self.b3 = self.json["b3"]
-		self.balance = self.json["balance"]
-		self.price = self.json["price"]
-		self.warns = self.json["warns"]
-		self.b9 = self.json["b9"]
-		self.lvd = self.json["lvd"]
-		self.exp = self.json["exp"]
+		self.b3 = self.json.get("b3")
+		self.balance = self.json.get("balance")
+		self.price = self.json.get("price")
+		self.warns = self.json.get("warns")
+		self.b9 = self.json.get("b9")
+		self.lvd = self.json.get("lvd")
+		self.exp = self.json.get("exp")
 		self.recent_liked_photos = self.json['recentLikedPhotos']
-		self.wins = self.json["wins"]
-		self.invis = self.json["invis"]
-		self.room_gifts = self.json["roomGifts"]
-		self.editor_is_activated = self.json["editorIsActivated"]
-		self.received = self.json["received"]
-		self.is_admin = self.json["isAdmin"]
-		self.is_money_box_disabled = self.json["isMoneyBoxDisabled"]
-		for spin_gift in self.json["spinGiftsArray"]:
+		self.wins = self.json.get("wins")
+		self.invis = self.json.get("invis")
+		self.room_gifts = self.json.get("roomGifts")
+		self.editor_is_activated = self.json.get("editorIsActivated")
+		self.received = self.json.get("received")
+		self.is_admin = self.json.get("isAdmin")
+		self.is_money_box_disabled = self.json.get("isMoneyBoxDisabled")
+		for spin_gift in self.json.get("spinGiftsArray", []):
 			self.spin_gifts_array.append(SpinGift(spin_gift).SpinGift)
-		self.price_per_anonymous_comment = self.json["pricePerAnonymousComment"]
-		self.is_VK_link_hidden = self.json["isVKLinkHidden"]
-		self.rg = self.json["rg"]
-		self.daily_bonuses = self.json["dailyBonuses"]
-		self.self_room_id = self.json["selfRoomId"]
-		self.canWF = self.json["canWF"]
-		self.canFN = self.json["canFN"]
-		self.notifications = self.json["notifications"]
-		self.status = self.json["status"]
-		self.vp100 = self.json["vp100"]
-		self.total_price = self.json["totalPrice"]
-		self.is_self_room_activated = self.json["isSelfRoomActivated"]
-		self.total_guests = self.json["totalGuests"]
-		self.time_of_last_reset_notifications_counter = self.json["timeOfLastResetNotificationsCounter"]
-		self.version = self.json["v"]
+		self.price_per_anonymous_comment = self.json.get("pricePerAnonymousComment")
+		self.is_VK_link_hidden = self.json.get("isVKLinkHidden")
+		self.rg = self.json.get("rg")
+		self.daily_bonuses = self.json.get("dailyBonuses")
+		self.self_room_id = self.json.get("selfRoomId")
+		self.canWF = self.json.get("canWF")
+		self.canFN = self.json.get("canFN")
+		self.notifications = self.json.get("notifications")
+		self.status = self.json.get("status")
+		self.vp100 = self.json.get("vp100")
+		self.total_price = self.json.get("totalPrice")
+		self.is_self_room_activated = self.json.get("isSelfRoomActivated")
+		self.total_guests = self.json.get("totalGuests")
+		self.time_of_last_reset_notifications_counter = self.json.get("timeOfLastResetNotificationsCounter")
+		self.version = self.json.get("v")
 		return self
 
 class UserInfo:
@@ -124,37 +126,37 @@ class UserInfo:
 
 	@property
 	def UserInfo(self):
-		self.age = self.json["age"]
-		self.sex = self.json["sex"]
-		self.exp = self.json["exp"]
-		self.first_name = self.json["fn"]
-		self.last_name = self.json["ln"]
-		self.photo_100 = self.json["p100"]
-		self.photo_200 = self.json["p200"]
-		self.vf = self.json["vf"]
-		self.pid = self.json["pid"]
-		self.photos = self.json["photos"]
-		self.country_id = self.json["countryId"]
-		self.room_id = self.json["roomId"]
-		self.game_counter_1 = self.json["gameCounter1"]
-		self.balance = self.json["balance"]
-		self.game_counter_2 = self.json["gameCounter2"]
-		self.game_counter_3 = self.json["gameCounter3"]
-		self.gifts = self.json["gifts"]
-		self.wins = self.json["wins"]
-		self.owner = self.json["owner"]
-		for comment in self.json["comments"]:
+		self.age = self.json.get("age")
+		self.sex = self.json.get("sex")
+		self.exp = self.json.get("exp")
+		self.first_name = self.json.get("fn")
+		self.last_name = self.json.get("ln")
+		self.photo_100 = self.json.get("p100")
+		self.photo_200 = self.json.get("p200")
+		self.vf = self.json.get("vf")
+		self.pid = self.json.get("pid")
+		self.photos = self.json.get("photos")
+		self.country_id = self.json.get("countryId")
+		self.room_id = self.json.get("roomId")
+		self.game_counter_1 = self.json.get("gameCounter1")
+		self.balance = self.json.get("balance")
+		self.game_counter_2 = self.json.get("gameCounter2")
+		self.game_counter_3 = self.json.get("gameCounter3")
+		self.gifts = self.json.get("gifts")
+		self.wins = self.json.get("wins")
+		self.owner = self.json.get("owner")
+		for comment in self.json.get("comments", {}):
 			self.comments.append(Comment(comment).Comment)
-		self.is_VK_link_hidden = self.json["isVKLinkHidden"]
-		self.harem_price = self.json["haremPrice"]
-		self.region_id = self.json["regionId"]
-		self.rg = self.json["rg"]
-		self.background = self.json["background"]
-		self.sign_in = self.json["signIn"]
-		self.fn_gen = self.json["fnGen"]
-		self.online = self.json["online"]
-		self.age = self.json["age"]
-		self.status = self.json["status"]
+		self.is_VK_link_hidden = self.json.get("isVKLinkHidden")
+		self.harem_price = self.json.get("haremPrice")
+		self.region_id = self.json.get("regionId")
+		self.rg = self.json.get("rg")
+		self.background = self.json.get("background")
+		self.sign_in = self.json.get("signIn")
+		self.fn_gen = self.json.get("fnGen")
+		self.online = self.json.get("online")
+		self.age = self.json.get("age")
+		self.status = self.json.get("status")
 		return self
 
 class Comment:
@@ -183,25 +185,25 @@ class Comment:
 
 	@property
 	def Comment(self):
-		self.id = self.json["_id"]
+		self.id = self.json.get("_id")
 		self.comments = self.json['comments']
-		self._from = self.json["from"]
-		self.last_reply = self.json["lastReply"]
-		self.pub = self.json["pub"]
-		self.text = self.json["text"]
-		self.to = self.json["to"]
-		self.ts = self.json["ts"]
-		self.upd = self.json["upd"]
-		self.from_exp = self.json["fromExp"]
-		self.from_age = self.json["fromAge"]
-		self.from_photo_url = self.json["fromPhotoUrl"]
-		self.from_full_name = self.json["fromFullName"]
-		self.from_vf = self.json["fromVF"]
-		self.to_exp = self.json["toExp"]
-		self.to_age = self.json["toAge"]
-		self.to_photo_url = self.json["toPhotoUrl"]
-		self.to_full_name = self.json["toFullName"]
-		self.toVF = self.json["toVF"]
+		self._from = self.json.get("from")
+		self.last_reply = self.json.get("lastReply")
+		self.pub = self.json.get("pub")
+		self.text = self.json.get("text")
+		self.to = self.json.get("to")
+		self.ts = self.json.get("ts")
+		self.upd = self.json.get("upd")
+		self.from_exp = self.json.get("fromExp")
+		self.from_age = self.json.get("fromAge")
+		self.from_photo_url = self.json.get("fromPhotoUrl")
+		self.from_full_name = self.json.get("fromFullName")
+		self.from_vf = self.json.get("fromVF")
+		self.to_exp = self.json.get("toExp")
+		self.to_age = self.json.get("toAge")
+		self.to_photo_url = self.json.get("toPhotoUrl")
+		self.to_full_name = self.json.get("toFullName")
+		self.toVF = self.json.get("toVF")
 		return self
 
 class SpinGift:
@@ -225,19 +227,19 @@ class SpinGift:
 
 	@property
 	def SpinGift(self):
-		self.id = self.json["_id"]
-		self.f = self.json["f"]
-		self.r = self.json["r"]
-		self.s = self.json["s"]
-		self.t = self.json["t"]
-		self.v = self.json["v"]
-		self.age = self.json["age"]
-		self.sex = self.json["sex"]
-		self.exp = self.json["exp"]
-		self.first_name = self.json["fn"]
-		self.last_name = self.json["ln"]
-		self.photo_100 = self.json["p100"]
-		self.photo_200 = self.json["p200"]
-		self.vf = self.json["vf"]
+		self.id = self.json.get("_id")
+		self.f = self.json.get("f")
+		self.r = self.json.get("r")
+		self.s = self.json.get("s")
+		self.t = self.json.get("t")
+		self.v = self.json.get("v")
+		self.age = self.json.get("age")
+		self.sex = self.json.get("sex")
+		self.exp = self.json.get("exp")
+		self.first_name = self.json.get("fn")
+		self.last_name = self.json.get("ln")
+		self.photo_100 = self.json.get("p100")
+		self.photo_200 = self.json.get("p200")
+		self.vf = self.json.get("vf")
 		return self
 	
