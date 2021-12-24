@@ -46,7 +46,7 @@ class Client:
         """
         Получение нового сообщения из сервера
         """
-        data = json.loads(self.socket.recv()[0])
+        data = json.loads(json.loads(self.socket.recv())[0])
         if data["1"] == 5:
             return
         return data
