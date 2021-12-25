@@ -55,7 +55,7 @@ class BootData:
 		self.total_photo_views = self.json.get("totalPhotoViews")
 		self.slE = self.json.get("slE")
 		self.b1 = self.json.get("b1")
-		self.photos_is_available_for_room = self.json['photosIsAvailableForRoom']
+		self.photos_is_available_for_room = self.json.get('photosIsAvailableForRoom')
 		self.b3 = self.json.get("b3")
 		self.balance = self.json.get("balance")
 		self.price = self.json.get("price")
@@ -63,7 +63,7 @@ class BootData:
 		self.b9 = self.json.get("b9")
 		self.lvd = self.json.get("lvd")
 		self.exp = self.json.get("exp")
-		self.recent_liked_photos = self.json['recentLikedPhotos']
+		self.recent_liked_photos = self.json.get('recentLikedPhotos')
 		self.wins = self.json.get("wins")
 		self.invis = self.json.get("invis")
 		self.room_gifts = self.json.get("roomGifts")
@@ -186,7 +186,7 @@ class Comment:
 	@property
 	def Comment(self):
 		self.id = self.json.get("_id")
-		self.comments = self.json['comments']
+		self.comments = self.json.get('comments')
 		self._from = self.json.get("from")
 		self.last_reply = self.json.get("lastReply")
 		self.pub = self.json.get("pub")

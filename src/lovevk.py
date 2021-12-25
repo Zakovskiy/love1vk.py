@@ -11,7 +11,7 @@ from utils import objects
 class Client:
 
     def __init__(self, auth_key: str, user_id: str, session_key: str = None,
-        client_type: int = 1, websocket: bool = False, mobi: bool = True) -> None:
+        client_type: int = 1, websocket: bool = False, mobi: bool = True, avatar: str = "") -> None:
         """
         В библиотеке возможна авторизация как через ВК, так и через ОдноКлассники
 
@@ -33,7 +33,7 @@ class Client:
         self.version = None
         if websocket:
             self.create_connection()
-        self.get_boot_data()
+        self.get_boot_data(photo=avatar)
 
     def create_connection(self):
         """
@@ -58,7 +58,7 @@ class Client:
         self.socket.send(json.dumps(data))
 
     def get_boot_data(self, first_name: str = "Игрок", last_name: str = "Игроков",
-        photo:str="https://i.makeagif.com/media/3-27-2015/zEzL2Q.gif", sex:int=1) -> objects.BootData:
+        photo:str="", sex:int=1) -> objects.BootData:
         data = {
             "fp": self.pc_fingerprint,
             "mobi": self.mobi,
@@ -87,6 +87,7 @@ class Client:
         request = self.request("getBootData.php", "post", data)
         data = objects.BootData(request["data"]).BootData
         if request["code"] != 200:
+            print(request)
             raise Exception("Ошибка авторизации пользователя")
         self.version = data.version
         return data
@@ -504,7 +505,7 @@ class Client:
         return self.request("comment/delete.php", _data=data)
 
     def b8cb335(self, uids):
-        return self.request("b8cb335.php", "post", _data={"uids": "_".join(uids)})
+        return self.request("b8cb335.php", "post", {"uids": "_".join(uids)})
 
     def utc(self):
         self.send({"action": "utc", "viewer_id": self.viewer_id})
@@ -514,6 +515,23 @@ class Client:
 
     def room_answer(self, room_id: int):
         self.send({"action": "room/answer", "r": f"1_{room_id}", "q": "lottery", "a": "1_11", "viewer_id": self.viewer_id, "cb": 1633799484972})
+
+    def invitations_first_bonus(self, uids: str, extra: str):
+        #extra = self.md5(f"{self.viewer_id}_{uids}_uids_{self.version}")
+        data = {
+            "_old": "sf7hf",
+            "uids": uids,
+            "extra": extra
+        }
+        result = self.request("invitations/first_bonus.php", "post", data)
+        return result
+
+    def invitations_bonus(self, target_uid):
+        data = {
+            "target_uid": target_uid
+        }
+        result = self.request("invitations/bonus.php", _data=data)
+        return result
 
     def md5(self, string: str):
         m = hashlib.md5()
