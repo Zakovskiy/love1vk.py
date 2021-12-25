@@ -116,14 +116,14 @@ class Client:
         """
         return self.request("room/v3/getRoomList.php")
 
-    def ping_rooms(self, room_top:bool=True) -> list:
+    def ping_rooms(self, room_top: bool = True) -> list:
         """
         Получение обновлений о комнатах и рейтинге
         """
         return self.request("ping.php", _data={"room_top":room_top})
 
-    def user_get_info(self, target_uid:int, target_user_is_friend:bool=True,
-        referer:int=7, sex:int=2) -> objects.UserInfo:
+    def user_get_info(self, target_uid: int, target_user_is_friend: bool = True,
+        referer: int = 7, sex: int = 2) -> objects.UserInfo:
         """
         Получение информации о пользователе
 
@@ -165,7 +165,7 @@ class Client:
         result = self.request("user/search.php", _data=data)
         return result
 
-    def user_update_region(self, country_id:int, region_id:int) -> dict:
+    def user_update_region(self, country_id: int, region_id: int) -> dict:
         """
         Изменить место жительства
         """
@@ -175,13 +175,13 @@ class Client:
         }
         return self.request("user/updateRegion.php", _data=data)
 
-    def user_top(self, all:bool=True) -> dict:
+    def user_top(self, all: bool = True) -> dict:
         """
         Рейтинг пользователей
         """
-        return self.request("user/top.php", _data={"all":all})
+        return self.request("user/top.php", _data={"all": all})
 
-    def user_inc_balance(self, action_id:int=6) -> dict:
+    def user_inc_balance(self, action_id: int = 6) -> dict:
         """
         Загадочная функция, которая может как и дать вам несколько монет,
             так и забрать...
@@ -352,7 +352,7 @@ class Client:
 
     def room_add_answer(self, room_id: int, a: str, q: str):
         """
-        Голование за что-либо в комнате
+        Голосование за что-либо в комнате
         """
         data = {
             "r": f"1_{room_id}",
@@ -512,15 +512,15 @@ class Client:
     def hand_shaking(self):
         self.send({"action": "hand-shaking", "viewer_id": self.viewer_id})
 
-    def room_answer(self, room_id):
+    def room_answer(self, room_id: int):
         self.send({"action": "room/answer", "r": f"1_{room_id}", "q": "lottery", "a": "1_11", "viewer_id": self.viewer_id, "cb": 1633799484972})
 
-    def md5(self, string):
+    def md5(self, string: str):
         m = hashlib.md5()
         m.update(string.encode())
         return m.hexdigest()
 
-    def request(self, method, type:str="get", _data:dir={}):
+    def request(self, method, type: str = "get", _data: dir={}):
         _data.update({
             "ts": int(time.time()),
             "client_type": self.client_type
