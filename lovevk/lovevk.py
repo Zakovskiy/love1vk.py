@@ -233,10 +233,3 @@ class Client:
             except:
                 result = requests.post(f"{self.api}{method}", data=_data).text
         return result
-
-if __name__ == "__main__":
-    client = Client("3dc184008434a5cfc8ca7c44b218973a", 514492216, room_iders=10)
-    #print(client.room.radio_add(104118, track_data))
-    #print(client.room.radio_add(104118, track_data))
-    #print(client.room.radio_remove(104118, 456240360))
-    #print(client.user.get_text_colors_and_ratings("5144292216"))
