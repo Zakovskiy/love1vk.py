@@ -1,3 +1,11 @@
+lilo.viewFactories.___ = function(e, t) {
+    return lilo.baseViewFactory(e, t)
+}
+,
+lilo.viewFactories["a-temp-view"] = function(e, t) {
+    return lilo.baseViewFactory(e, t)
+}
+,
 lilo.viewFactories["active-comments-view"] = function(e, t) {
     var i = lilo.baseViewFactory(e, t)
       , n = "loading"
@@ -18717,8 +18725,8 @@ app.controllers.MainController = function() {
             e()
         }))
     }, F = function() {
-        let i = [12, 13, 14]
-          , o = e=>12 === e ? 'У нас для вас подарок за участие в акции "Новогодняя суета"' : 13 === e ? 'У нас для вас подарок за участие в акции "Снегопад"' : "У нас для вас подарок!"
+        let i = [15]
+          , o = e=>15 === e ? 'У нас для вас подарок за участие в акции "Календарь наград"' : 12 === e ? 'У нас для вас подарок за участие в акции "Новогодняя суета"' : 13 === e ? 'У нас для вас подарок за участие в акции "Снегопад"' : "У нас для вас подарок!"
           , n = async e=>new Promise(t=>{
             VKApi("apps.promoHasActiveGift", {
                 promo_id: e
@@ -18772,7 +18780,7 @@ app.controllers.MainController = function() {
             )
         }
         return function() {
-            +new Date < +new Date(2022,3,10) && setTimeout(a, 100)
+            +new Date < +new Date(2022,5,16) && setTimeout(a, 100)
         }
     }(), V = (d = 0,
     c = {},
@@ -18976,7 +18984,7 @@ app.controllers.MainController = function() {
                 title: 'Услуга "СуперЛайк"',
                 descriptions: [{
                     title: "<b>1 день</b>",
-                    price: 100,
+                    price: v.prices.superLike[0],
                     period: 1,
                     subTitles: [{
                         text: "Подключив дaнную услугу, вы получаете уникальные возможности:"
@@ -19000,11 +19008,11 @@ app.controllers.MainController = function() {
                     }]
                 }, {
                     title: "<b>Неделя</b> (скидка 30%)",
-                    price: 490,
+                    price: v.prices.superLike[1],
                     period: 2
                 }, {
                     title: "<b>Месяц</b> (скидка 50%)",
-                    price: 1500,
+                    price: v.prices.superLike[2],
                     period: 3
                 }]
             },
@@ -19218,15 +19226,15 @@ app.controllers.MainController = function() {
                     }
                 }, {
                     title: "<b>1 день</b>",
-                    price: 10,
+                    price: v.prices.privacy[0],
                     period: 1
                 }, {
                     title: "<b>Неделя</b> (скидка 30%)",
-                    price: 50,
+                    price: v.prices.privacy[1],
                     period: 2
                 }, {
                     title: "<b>Месяц</b> (скидка 50%)",
-                    price: 150,
+                    price: v.prices.privacy[2],
                     period: 3
                 }]
             },
@@ -19265,11 +19273,11 @@ app.controllers.MainController = function() {
                 title: 'Услуга "Невидимка"<div class="descr-sub-title">Подключив данную услугу вы сможете:<ol class="large"> <li class="item-descr">Отображаться как "Невидимка" в списках гостей</li> <li class="item-descr">Писать анонимные комментарии на страницах</li> <li class="item-descr">Включать опцию "Скрытая игра" (статус офлайн в игре, невидимка в топе и прочих разделах)</li></ol></div>',
                 descriptions: [{
                     title: "<b>1 неделя</b>",
-                    price: v.invisPricePerWeek,
+                    price: v.prices.invis[0],
                     period: 0
                 }, {
                     title: "<b>1 месяц&nbsp;<span class='discount'>(скидка 30%)</span></b>",
-                    price: v.invisPricePerMonth,
+                    price: v.prices.invis[1],
                     period: 1
                 }]
             },
