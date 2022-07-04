@@ -366,3 +366,8 @@ class Search:
             self.part_2.append(SearchUser(user).SearchUser)
         self.online_uids = self.json.get("onlineUids", [])
         return self
+
+class Event:
+
+    def __init__(self, data: dict):
+        pass

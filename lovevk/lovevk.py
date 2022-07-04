@@ -3,18 +3,20 @@ import json
 import time
 import hashlib
 import threading
+import base64
+import urllib
+import html
 from websocket import create_connection
-from utils import objects
-from user import User
-from room import Room
-from viral import Viral
+from .utils import objects
+from .user import User
+from .room import Room
+from .viral import Viral
+from .socket import Callbacks, SocketHandler, Events
 
-
-class Client:
-
+class Client(Callbacks, SocketHandler):
     def __init__(self, auth_key: str, user_id: str, session_key: str = None,
         client_type: int = 1, websocket: bool = False, mobi: bool = True, avatar: str = "",
-        room_iders: int = 1) -> None:
+        room_iders: int = 1, first_name: str = "Игрок") -> None:
         """ В библиотеке возможна авторизация как через ВК, так и через ОдноКлассники
 
         **Параметры**
@@ -37,10 +39,13 @@ class Client:
         self.pc_fingerprint = "eb312822100c2618a3a608cd910dd131"
         self.api = "https://igra.love/web/"
         self.version = None
+        self.data = None
         self.room_iders = room_iders
+        self.get_boot_data(photo=avatar, first_name=first_name)
+        Callbacks.__init__(self)
+        SocketHandler.__init__(self, self)
         if websocket:
             self.create_connection()
-        self.get_boot_data(photo=avatar)
         self.load_classes()
 
     def load_classes(self):
@@ -48,24 +53,11 @@ class Client:
         self.room: Room = Room(self)
         self.viral: Viral = Viral(self)
 
-    def create_connection(self):
-        """ Создание вебсокета """
-        self.socket = create_connection(f"wss://igra.love/web/websocket?viewer_id={self.viewer_id}&auth_key={self.auth_key}&client_type={self.client_type}&api_id=4333086&tab_id=0")
-        self.utc()
-
-    def listen(self):
-        """ Получение новых данных из вебсокета """
-        data = json.loads(json.loads(self.socket.recv())[0])
-        if data["1"] == 5:
-            return
-        return data
-
-    def send(self, data: list) -> None:
-        """ Отправление неких данных на вебсокет """
-        self.socket.send(json.dumps(data))
+    def handle_socket_message(self, data):
+        self.resolve(data)
 
     def get_boot_data(self, first_name: str = "Игрок", last_name: str = "Игроков",
-        photo:str="", sex:int=1) -> objects.BootData:
+        photo: str = "", sex: int = 1) -> objects.BootData:
         data = {
             "fp": self.pc_fingerprint,
             "mobi": self.mobi,
@@ -79,7 +71,7 @@ class Client:
         }
         if self.client_type == 2:
             data.update({
-                "name_cases": "Игрок,+,Игрок,+,Игрок,+,Игрок,+,Игрок,+",
+                "name_cases": f"{first_name},+,{first_name},+,{first_name},+,{first_name},+,{first_name},+",
                 "update_name": "true",
                 "ok_avatar_url": photo,
                 "ok_fn": first_name,
@@ -87,15 +79,17 @@ class Client:
             })
         else:
             data.update({
-                "name_cases_json_array": json.dumps(["Игрок","Игрок","Игрок","Игрок","Игрок","Игрок","Игрок","Игрок","Игрок","Игрок"]),
+                "name_cases_json_array": json.dumps([first_name, first_name, first_name, first_name, first_name, first_name, first_name, first_name, first_name, first_name]),
                 "user_id": self.viewer_id,
                 "hash": ""
             })
         request = self.request("getBootData.php", "post", data)
         data = objects.BootData(request["data"]).BootData
         if request["code"] != 200:
-            raise Exception(request.get("message"))
+            raise Exception(request)
+        self.data = data
         self.version = data.version
+        print(data.version)
         return data
 
     def ping_rooms(self, room_top: bool = True) -> dict:
@@ -153,6 +147,16 @@ class Client:
     def money_box_get(self):
         return self.request("moneybox/get.php")
 
+    def deposits_buy(self, target_uid: int, type: int = 1, force: int = 0):
+        extra = self.md5(f"{self.viewer_id}_{force}_{target_uid}_{int(time.time())}_{self.version}")
+        data = {
+            "extra": extra,
+            "target_uid": target_uid,
+            "t": type,
+            "f": force,
+        }
+        return self.request("deposits/buy.php", _data=data)
+
     def comment_add(self, target_uid: int, text: str, target_user_is_friend: bool = False, is_anonymous: bool = False):
         extra = self.md5(f"{self.viewer_id}_{target_uid}_{int(time.time())}_{self.version}")
         data = {
@@ -173,15 +177,6 @@ class Client:
 
     def b8cb335(self, uids):
         return self.request("b8cb335.php", "post", {"uids": "_".join(uids)})
-
-    def utc(self):
-        self.send({"action": "utc", "viewer_id": self.viewer_id})
-
-    def hand_shaking(self):
-        self.send({"action": "hand-shaking", "viewer_id": self.viewer_id})
-
-    def room_answer(self, room_id: int):
-        self.send({"action": "room/answer", "r": f"{self.room_iders}_{room_id}", "q": "lottery", "a": "1_11", "viewer_id": self.viewer_id, "cb": 1633799484972})
 
     def invitations_first_bonus(self, uids: str, extra: str):
         #extra = self.md5(f"{self.viewer_id}_{uids}_uids_{self.version}")

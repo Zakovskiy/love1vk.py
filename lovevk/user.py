@@ -1,4 +1,4 @@
-from utils import objects
+from .utils import objects
 
 
 class User:
@@ -6,7 +6,7 @@ class User:
     def __init__(self, client) -> None:
         self.client = client
 
-    def get_info(self, target_uid: int, target_user_is_friend: bool = True,
+    def get_info(self, target_uid: int, target_user_is_friend: bool = False,
         referer: int = 7, sex: int = 2) -> objects.UserInfo:
         """ Получение информации о пользователе
 

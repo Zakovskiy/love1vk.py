@@ -1,10 +1,11 @@
 import json
 from room import Room
 
+
 class Radio(Room):
 
     def __init__(self, client, room_id: int, type: int = None, artist: str = None, title: str = None, audio_id: int = None,
-        audio_owner_id: int = None, duration: int = None):
+        audio_owner_id: int = None, duration: int = None) -> None:
         super().__init__(client)
         self.type = type
         self.artist = artist
@@ -16,7 +17,7 @@ class Radio(Room):
         if artist:
             self.radio_add()
 
-    def radio_add(self):
+    def radio_add(self) -> dict:
         data = {
             "type": self.type,
             "artist": self.artist,
@@ -27,5 +28,5 @@ class Radio(Room):
         }
         return self.client.room.radio_add(self.room_id, data)
 
-    def radio_vote(self, vote: bool):
+    def radio_vote(self, vote: bool) -> dict:
         return self.client.room.radio_vote(self.room_id, vote)
