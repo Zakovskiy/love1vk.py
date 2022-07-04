@@ -52,7 +52,7 @@ class SocketHandler:
 
     def ad_reward(self):
         ts = round(time.time() * 1000)
-        sign = self.md5(f"{ts}_{self.version}_{self.version}")
+        sign = self.md5(f"{ts}_{self.client.version}_{self.client.version}")
         values = {
             "ts": ts,
             "sign": sign
