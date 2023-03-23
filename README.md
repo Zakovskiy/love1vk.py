@@ -5,7 +5,7 @@
 
 # Install
 ```
-git clone https://github.com/Zakovskiy/lovevk.py
+git clone https://github.com/Zakovskiy/love1vk.py
 ```
 
 # Import and Auth
